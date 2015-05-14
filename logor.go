@@ -16,6 +16,8 @@ const (
 	TraceLevel = 600
 )
 
+var logor *Logor = nil
+
 type Logor struct {
 	Level       int
 	FatalLogger *log.Logger
@@ -27,17 +29,24 @@ type Logor struct {
 }
 
 func New() *Logor {
-	logor := new(Logor)
+	l := new(Logor)
 	flag := log.Lshortfile | log.LstdFlags
 
-	logor.Level = InfoLevel
-	logor.FatalLogger = log.New(os.Stderr, "[F] ", flag)
-	logor.ErrorLogger = log.New(os.Stderr, "[E] ", flag)
-	logor.WarnLogger = log.New(os.Stdout, "[W] ", flag)
-	logor.InfoLogger = log.New(os.Stdout, "[I] ", flag)
-	logor.DebugLogger = log.New(os.Stdout, "[D] ", flag)
-	logor.TraceLogger = log.New(os.Stdout, "[T] ", flag)
+	l.Level = InfoLevel
+	l.FatalLogger = log.New(os.Stderr, "[F] ", flag)
+	l.ErrorLogger = log.New(os.Stderr, "[E] ", flag)
+	l.WarnLogger = log.New(os.Stdout, "[W] ", flag)
+	l.InfoLogger = log.New(os.Stdout, "[I] ", flag)
+	l.DebugLogger = log.New(os.Stdout, "[D] ", flag)
+	l.TraceLogger = log.New(os.Stdout, "[T] ", flag)
 
+	return l
+}
+
+func GetLogor() *Logor {
+	if logor == nil {
+		logor = New()
+	}
 	return logor
 }
 
