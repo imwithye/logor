@@ -50,6 +50,7 @@ func GetLogor() *Logor {
 	return logor
 }
 
+// Fatal logs the error message to Stderr and exit program with code 1.
 func (l *Logor) Fatal(v ...interface{}) {
 	if l.Level >= FatalLevel {
 		l.FatalLogger.Output(2, fmt.Sprintln(v...))
@@ -57,6 +58,8 @@ func (l *Logor) Fatal(v ...interface{}) {
 	}
 }
 
+// Fatalf logs the error message to Stderr and exit program with code 1.
+// Message is formated by the format string.
 func (l *Logor) Fatalf(format string, v ...interface{}) {
 	if l.Level >= FatalLevel {
 		l.FatalLogger.Output(2, fmt.Sprintf(format, v...))
@@ -64,6 +67,7 @@ func (l *Logor) Fatalf(format string, v ...interface{}) {
 	}
 }
 
+// FatalCode logs the error message to Stderr and exit program with a custom code.
 func (l *Logor) FatalCode(code int, v ...interface{}) {
 	if l.Level >= FatalLevel {
 		l.FatalLogger.Output(2, fmt.Sprintln(v...))
@@ -71,6 +75,8 @@ func (l *Logor) FatalCode(code int, v ...interface{}) {
 	}
 }
 
+// FatalfCode logs the error message to Stderr and exit program with a custom code.
+// Message is formated by the format string.
 func (l *Logor) FatalfCode(code int, format string, v ...interface{}) {
 	if l.Level >= FatalLevel {
 		l.FatalLogger.Output(2, fmt.Sprintf(format, v...))
@@ -78,60 +84,75 @@ func (l *Logor) FatalfCode(code int, format string, v ...interface{}) {
 	}
 }
 
+// Error logs the error message to Stderr.
 func (l *Logor) Error(v ...interface{}) {
 	if l.Level >= ErrorLevel {
 		l.ErrorLogger.Output(2, fmt.Sprintln(v...))
 	}
 }
 
+// Errorf logs the error message to Stderr.
+// Message is formated by the format string.
 func (l *Logor) Errorf(format string, v ...interface{}) {
 	if l.Level >= ErrorLevel {
 		l.ErrorLogger.Output(2, fmt.Sprintf(format, v...))
 	}
 }
 
+// Warn logs the warn message to Stdout.
 func (l *Logor) Warn(v ...interface{}) {
 	if l.Level >= WarnLevel {
 		l.WarnLogger.Output(2, fmt.Sprintln(v...))
 	}
 }
 
+// Warnf logs the warn message to Stdout.
+// Message is formated by the format string.
 func (l *Logor) Warnf(format string, v ...interface{}) {
 	if l.Level >= WarnLevel {
 		l.WarnLogger.Output(2, fmt.Sprintf(format, v...))
 	}
 }
 
+// Info logs the info message to Stdout.
 func (l *Logor) Info(v ...interface{}) {
 	if l.Level >= InfoLevel {
 		l.InfoLogger.Output(2, fmt.Sprintln(v...))
 	}
 }
 
+// Infof logs the info message to Stdout.
+// Message is formated by the format string.
 func (l *Logor) Infof(format string, v ...interface{}) {
 	if l.Level >= InfoLevel {
 		l.InfoLogger.Output(2, fmt.Sprintf(format, v...))
 	}
 }
 
+// Debug logs the debug message to Stdout.
 func (l *Logor) Debug(v ...interface{}) {
 	if l.Level >= DebugLevel {
 		l.DebugLogger.Output(2, fmt.Sprintln(v...))
 	}
 }
 
+// Debugf logs the debug message to Stdout.
+// Message is formated by the format string.
 func (l *Logor) Debugf(format string, v ...interface{}) {
 	if l.Level >= DebugLevel {
 		l.DebugLogger.Output(2, fmt.Sprintf(format, v...))
 	}
 }
 
+// Trace logs the trace message to Stdout.
 func (l *Logor) Trace(v ...interface{}) {
 	if l.Level >= TraceLevel {
 		l.TraceLogger.Output(2, fmt.Sprintln(v...))
 	}
 }
 
+// Tracef logs the trace message to Stdout.
+// Message is formated by the format string.
 func (l *Logor) Tracef(format string, v ...interface{}) {
 	if l.Level >= TraceLevel {
 		l.TraceLogger.Output(2, fmt.Sprintf(format, v...))
