@@ -23,6 +23,7 @@ type Logor struct {
 	WarnLogger  *log.Logger
 	InfoLogger  *log.Logger
 	DebugLogger *log.Logger
+	TraceLogger *log.Logger
 }
 
 func New() *Logor {
@@ -35,6 +36,7 @@ func New() *Logor {
 	logor.WarnLogger = log.New(os.Stdout, "[W] ", flag)
 	logor.InfoLogger = log.New(os.Stdout, "[I] ", flag)
 	logor.DebugLogger = log.New(os.Stdout, "[D] ", flag)
+	logor.TraceLogger = log.New(os.Stdout, "[T] ", flag)
 
 	return logor
 }
@@ -112,5 +114,17 @@ func (l *Logor) Debug(v ...interface{}) {
 func (l *Logor) Debugf(format string, v ...interface{}) {
 	if l.Level >= DebugLevel {
 		l.DebugLogger.Output(2, fmt.Sprintf(format, v...))
+	}
+}
+
+func (l *Logor) Trace(v ...interface{}) {
+	if l.Level >= TraceLevel {
+		l.TraceLogger.Output(2, fmt.Sprintln(v...))
+	}
+}
+
+func (l *Logor) Tracef(format string, v ...interface{}) {
+	if l.Level >= TraceLevel {
+		l.TraceLogger.Output(2, fmt.Sprintf(format, v...))
 	}
 }
