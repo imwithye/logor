@@ -8,4 +8,5 @@ func main() {
 	logor.Warn("log warn")
 	logor.Debug("log warn")
 	logor.Error("log error")
+	logor.FatalCode(2, "log fatal")
 }
