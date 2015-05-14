@@ -1,6 +1,7 @@
 package logor
 
 import (
+	"os"
 	"testing"
 )
 
@@ -29,4 +30,13 @@ func TestSingtelton(t *testing.T) {
 
 	l = GetLogor()
 	l.Error("should not be displayed")
+}
+
+func TestOutputfile(t *testing.T) {
+	out, _ := os.Create("out.txt")
+	err, _ := os.Create("err.txt")
+	l := NewCustomIO(out, err)
+
+	l.Info("info")
+	l.Error("error")
 }

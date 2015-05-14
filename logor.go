@@ -2,6 +2,7 @@ package logor
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"os"
 )
@@ -28,24 +29,39 @@ type Logor struct {
 	TraceLogger *log.Logger
 }
 
+// Create a logger using Stdout and Stderr
 func New() *Logor {
+	return NewCustomIO(os.Stdout, os.Stdout)
+}
+
+// Create a logger with custom io
+func NewCustomIO(out io.Writer, err io.Writer) *Logor {
 	l := new(Logor)
 	flag := log.Lshortfile | log.LstdFlags
 
 	l.Level = InfoLevel
-	l.FatalLogger = log.New(os.Stderr, "[F] ", flag)
-	l.ErrorLogger = log.New(os.Stderr, "[E] ", flag)
-	l.WarnLogger = log.New(os.Stdout, "[W] ", flag)
-	l.InfoLogger = log.New(os.Stdout, "[I] ", flag)
-	l.DebugLogger = log.New(os.Stdout, "[D] ", flag)
-	l.TraceLogger = log.New(os.Stdout, "[T] ", flag)
+	l.FatalLogger = log.New(err, "[F] ", flag)
+	l.ErrorLogger = log.New(err, "[E] ", flag)
+	l.WarnLogger = log.New(out, "[W] ", flag)
+	l.InfoLogger = log.New(out, "[I] ", flag)
+	l.DebugLogger = log.New(out, "[D] ", flag)
+	l.TraceLogger = log.New(out, "[T] ", flag)
 
 	return l
 }
 
+// Get shared logger with Stdout and Stderr
 func GetLogor() *Logor {
 	if logor == nil {
 		logor = New()
+	}
+	return logor
+}
+
+// Get shared logger with custom io
+func GetLogorCustomIO(out io.Writer, err io.Writer) *Logor {
+	if logor == nil {
+		logor = NewCustomIO(out, err)
 	}
 	return logor
 }
