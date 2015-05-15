@@ -7,6 +7,10 @@ import (
 	"os"
 )
 
+// Logor's log level. Higher number means higher level. Only if the current level
+// is greater than the function level, logs will be printed. For example, if log
+// level is set to TraceLevel, all logs will be printed; but if log level is set
+// to ErrorLevel, only Fatal and Error logs will be printed.
 const (
 	Off        = 0
 	FatalLevel = 100
@@ -17,8 +21,11 @@ const (
 	TraceLevel = 600
 )
 
-var logor *Logor = nil
+var logor *Logor
 
+// Logor struct defines the layout of Logor instance. Logor is actual based on
+// the default logger of golang. So you are able to change any single logger inside
+// Logor
 type Logor struct {
 	Level       int
 	FatalLogger *log.Logger
@@ -29,12 +36,12 @@ type Logor struct {
 	TraceLogger *log.Logger
 }
 
-// Create a logger using Stdout and Stderr
+// New creates a logger using Stdout and Stderr
 func New() *Logor {
 	return NewCustomIO(os.Stdout, os.Stdout)
 }
 
-// Create a logger with custom io
+// NewCustomIO creates a logger with custom io
 func NewCustomIO(out io.Writer, err io.Writer) *Logor {
 	l := new(Logor)
 	flag := log.Lshortfile | log.LstdFlags
@@ -50,7 +57,7 @@ func NewCustomIO(out io.Writer, err io.Writer) *Logor {
 	return l
 }
 
-// Get shared logger with Stdout and Stderr
+// GetLogor gets a shared logger using Stdout and Stderr
 func GetLogor() *Logor {
 	if logor == nil {
 		logor = New()
@@ -58,7 +65,7 @@ func GetLogor() *Logor {
 	return logor
 }
 
-// Get shared logger with custom io
+// GetLogorCustomIO get a shared logger using custom io
 func GetLogorCustomIO(out io.Writer, err io.Writer) *Logor {
 	if logor == nil {
 		logor = NewCustomIO(out, err)
