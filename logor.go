@@ -73,6 +73,17 @@ func GetLogorCustomIO(out io.Writer, err io.Writer) *Logor {
 	return logor
 }
 
+// SetFlags sets the output flags for all loggers. Flags supported are list in
+// http://golang.org/pkg/log/#pkg-constants
+func (l *Logor) SetFlags(flag int) {
+	l.FatalLogger.SetFlags(flag)
+	l.ErrorLogger.SetFlags(flag)
+	l.WarnLogger.SetFlags(flag)
+	l.InfoLogger.SetFlags(flag)
+	l.DebugLogger.SetFlags(flag)
+	l.TraceLogger.SetFlags(flag)
+}
+
 // Fatal logs the error message to Stderr and exit program with code 1.
 func (l *Logor) Fatal(v ...interface{}) {
 	if l.Level >= FatalLevel {
