@@ -44,15 +44,15 @@ func New() *Logor {
 // NewCustomIO creates a logger with custom io
 func NewCustomIO(out io.Writer, err io.Writer) *Logor {
 	l := new(Logor)
-	flag := log.Lshortfile | log.LstdFlags
+	debugFlag := log.Lshortfile | log.LstdFlags
 
 	l.Level = InfoLevel
-	l.FatalLogger = log.New(err, "[F] ", flag)
-	l.ErrorLogger = log.New(err, "[E] ", flag)
-	l.WarnLogger = log.New(out, "[W] ", flag)
-	l.InfoLogger = log.New(out, "[I] ", flag)
-	l.DebugLogger = log.New(out, "[D] ", flag)
-	l.TraceLogger = log.New(out, "[T] ", flag)
+	l.FatalLogger = log.New(err, "[F] ", log.LstdFlags)
+	l.ErrorLogger = log.New(err, "[E] ", log.LstdFlags)
+	l.WarnLogger = log.New(out, "[W] ", log.LstdFlags)
+	l.InfoLogger = log.New(out, "[I] ", log.LstdFlags)
+	l.DebugLogger = log.New(out, "[D] ", debugFlag)
+	l.TraceLogger = log.New(out, "[T] ", debugFlag)
 
 	return l
 }
